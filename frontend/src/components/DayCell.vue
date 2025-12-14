@@ -1,7 +1,6 @@
 <template>
   <div 
-    class="day-cell rounded-lg border-2 overflow-hidden transition-all flex-shrink-0
-           w-[100px] sm:w-auto"
+    class="day-cell rounded-lg border-2 overflow-hidden transition-all"
     :class="isToday ? 'border-primary-500 shadow-md' : 'border-gray-200'"
   >
     <!-- Header -->

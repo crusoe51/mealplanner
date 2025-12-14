@@ -18,23 +18,21 @@
     </div>
     
     <!-- Days -->
-    <!-- Mobile: Horizontal scrollbar, Desktop: Grid -->
-    <div class="sm:grid sm:grid-cols-7 sm:gap-2 sm:p-3 overflow-x-auto p-3 sm:overflow-x-visible scroll-smooth">
-      <div class="flex sm:contents gap-2 min-w-max sm:min-w-0">
-        <DayCell
-          v-for="d in 7"
-          :key="d"
-          :day="d - 1"
-          :meal="plan[d - 1]"
-          :week-start="weekStart"
-          :year="year"
-          :week="week"
-          :meals="meals"
-          @set="mealId => $emit('set', { year, week, day: d - 1, mealId })"
-          @clear="$emit('clear', { year, week, day: d - 1 })"
-          @move="data => $emit('move', { ...data, toYear: year, toWeek: week, toDay: d - 1 })"
-        />
-      </div>
+    <!-- Mobile: 2 columns, Tablet+: 7 columns -->
+    <div class="grid grid-cols-2 sm:grid-cols-7 gap-2 p-3">
+      <DayCell
+        v-for="d in 7"
+        :key="d"
+        :day="d - 1"
+        :meal="plan[d - 1]"
+        :week-start="weekStart"
+        :year="year"
+        :week="week"
+        :meals="meals"
+        @set="mealId => $emit('set', { year, week, day: d - 1, mealId })"
+        @clear="$emit('clear', { year, week, day: d - 1 })"
+        @move="data => $emit('move', { ...data, toYear: year, toWeek: week, toDay: d - 1 })"
+      />
     </div>
   </div>
 </template>
