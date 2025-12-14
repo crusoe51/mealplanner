@@ -27,6 +27,7 @@
         :week-start="weekStart"
         :year="year"
         :week="week"
+        :meals="meals"
         @set="mealId => $emit('set', { year, week, day: d - 1, mealId })"
         @clear="$emit('clear', { year, week, day: d - 1 })"
         @move="data => $emit('move', { ...data, toYear: year, toWeek: week, toDay: d - 1 })"
@@ -42,7 +43,11 @@ import DayCell from './DayCell.vue'
 const props = defineProps({
   year: Number,
   week: Number,
-  plan: Object
+  plan: Object,
+  meals: {
+    type: Array,
+    default: () => []
+  }
 })
 
 defineEmits(['set', 'clear', 'move'])

@@ -31,19 +31,21 @@
                 :key="c"
                 type="button"
                 @click="color = c"
-                class="w-9 h-9 rounded-lg border-2 transition-transform hover:scale-110"
-                :class="color === c ? 'border-gray-900 scale-110' : 'border-transparent'"
+                class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-lg border-2 transition-all 
+                       hover:scale-110 active:scale-95 touch-manipulation"
+                :class="color === c ? 'border-gray-900 scale-110 ring-2 ring-offset-2 ring-gray-400' : 'border-transparent'"
                 :style="{ backgroundColor: c }"
+                :aria-label="`Farbe ${c} auswählen`"
               ></button>
             </div>
           </div>
           
           <!-- Actions -->
-          <div class="flex justify-end gap-3">
-            <button type="button" @click="$emit('close')" class="btn-secondary">
+          <div class="flex flex-col sm:flex-row justify-end gap-3">
+            <button type="button" @click="$emit('close')" class="btn-secondary min-h-[44px]">
               Abbrechen
             </button>
-            <button type="submit" class="btn-primary" :disabled="!name.trim()">
+            <button type="submit" class="btn-primary min-h-[44px]" :disabled="!name.trim()">
               {{ editMeal ? 'Speichern' : 'Erstellen' }}
             </button>
           </div>

@@ -5,8 +5,11 @@
     <div class="grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-6">
       <div>
         <WeekRow v-for="w in weeks" :key="w.year+'-'+w.week" :year="w.year" :week="w.week" :plan="plans[w.year+'-'+w.week] || {}"
+          :meals="meals"
           @set="$emit('set', $event)" @clear="$emit('clear', $event)" @move="$emit('move', $event)" />
-        <button @click="$emit('clearAll')" class="btn-secondary text-sm">Alle Wochen leeren</button>
+        <button @click="$emit('clearAll')" class="btn-secondary text-sm min-h-[44px] w-full sm:w-auto">
+          Alle Wochen leeren
+        </button>
       </div>
       <MealPool :meals="meals" @add="$emit('addMeal')" />
     </div>

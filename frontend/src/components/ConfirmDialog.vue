@@ -14,9 +14,9 @@
         <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ title }}</h3>
         <p class="text-gray-500 mb-6">{{ message }}</p>
         
-        <div class="flex gap-3">
-          <button @click="$emit('close')" class="flex-1 btn-secondary">Abbrechen</button>
-          <button @click="$emit('confirm')" class="flex-1 btn-danger">{{ confirmText }}</button>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button @click="$emit('close')" class="flex-1 btn-secondary min-h-[44px]">Abbrechen</button>
+          <button @click="$emit('confirm')" class="flex-1 btn-danger min-h-[44px]">{{ confirmText }}</button>
         </div>
       </div>
     </div>

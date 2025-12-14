@@ -42,10 +42,55 @@
       </div>
       
       <!-- Empty -->
-      <div v-else class="h-full flex items-center justify-center text-gray-300">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4" />
-        </svg>
+      <div v-else class="h-full flex items-center justify-center">
+        <button
+          @click.stop="showMealSelect = true"
+          class="w-full h-full min-h-[44px] flex items-center justify-center text-gray-400 hover:text-primary-500 
+                 active:bg-primary-50 transition-colors touch-manipulation"
+          aria-label="Gericht hinzufügen"
+        >
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Meal Selection Modal -->
+    <div
+      v-if="showMealSelect"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
+      @click.self="showMealSelect = false"
+    >
+      <div class="bg-white rounded-xl shadow-xl max-w-md w-full max-h-[80vh] overflow-hidden flex flex-col">
+        <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-900">Gericht auswählen</h3>
+          <button
+            @click="showMealSelect = false"
+            class="p-2 text-gray-400 hover:text-gray-600 transition-colors touch-manipulation"
+            aria-label="Schließen"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="overflow-y-auto flex-1 p-2">
+          <div v-if="availableMeals.length === 0" class="py-8 text-center text-gray-400 text-sm">
+            Keine Gerichte verfügbar
+          </div>
+          <button
+            v-for="m in availableMeals"
+            :key="m.id"
+            @click="selectMeal(m.id)"
+            class="w-full p-3 mb-2 text-left bg-white border-2 border-gray-200 rounded-lg 
+                   hover:border-primary-300 hover:shadow-sm transition-all touch-manipulation
+                   active:bg-primary-50"
+            :style="{ borderLeftColor: m.color, borderLeftWidth: '4px' }"
+          >
+            <span class="text-sm font-medium text-gray-800">{{ m.name }}</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -59,7 +104,11 @@ const props = defineProps({
   meal: Object,
   weekStart: Date,
   year: Number,
-  week: Number
+  week: Number,
+  meals: {
+    type: Array,
+    default: () => []
+  }
 })
 
 const emit = defineEmits(['set', 'clear', 'move'])
@@ -77,6 +126,15 @@ const dayName = computed(() => days[props.day])
 const dayNumber = computed(() => date.value.getDate())
 const isWeekend = computed(() => props.day >= 5)
 const isToday = computed(() => date.value.toDateString() === new Date().toDateString())
+
+const showMealSelect = ref(false)
+
+const availableMeals = computed(() => props.meals || [])
+
+function selectMeal(mealId) {
+  emit('set', mealId)
+  showMealSelect.value = false
+}
 
 function onDragStart(e) {
   e.dataTransfer.setData('application/json', JSON.stringify({
@@ -106,6 +164,11 @@ function onDrop(e) {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 </style>
 

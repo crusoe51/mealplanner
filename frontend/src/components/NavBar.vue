@@ -16,10 +16,10 @@
           v-for="tab in tabs"
           :key="tab.id"
           @click="$emit('navigate', tab.id)"
-          class="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          class="px-4 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-colors touch-manipulation"
           :class="current === tab.id 
-            ? 'bg-primary-100 text-primary-700' 
-            : 'text-gray-600 hover:bg-gray-100'"
+            ? 'bg-primary-100 text-primary-700 active:bg-primary-200' 
+            : 'text-gray-600 hover:bg-gray-100 active:bg-gray-200'"
         >
           {{ tab.label }}
         </button>

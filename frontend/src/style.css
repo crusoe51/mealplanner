@@ -4,28 +4,36 @@
 
 @layer components {
   .btn-primary {
-    @apply px-4 py-2 bg-primary-500 text-white rounded-lg font-medium 
-           hover:bg-primary-600 transition-colors disabled:opacity-50;
+    @apply px-4 py-2 min-h-[44px] bg-primary-500 text-white rounded-lg font-medium 
+           hover:bg-primary-600 active:bg-primary-700 transition-colors disabled:opacity-50
+           touch-manipulation;
   }
   
   .btn-secondary {
-    @apply px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg font-medium 
-           hover:bg-gray-50 transition-colors;
+    @apply px-4 py-2 min-h-[44px] bg-white text-gray-700 border border-gray-300 rounded-lg font-medium 
+           hover:bg-gray-50 active:bg-gray-100 transition-colors touch-manipulation;
   }
   
   .btn-danger {
-    @apply px-4 py-2 bg-red-500 text-white rounded-lg font-medium 
-           hover:bg-red-600 transition-colors;
+    @apply px-4 py-2 min-h-[44px] bg-red-500 text-white rounded-lg font-medium 
+           hover:bg-red-600 active:bg-red-700 transition-colors touch-manipulation;
   }
   
   .btn-icon {
-    @apply p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors;
+    @apply p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-600 
+           hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-colors touch-manipulation;
   }
   
   .input {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg 
-           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply w-full px-4 py-2 min-h-[44px] border border-gray-300 rounded-lg 
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           touch-manipulation;
   }
+}
+
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .animate-spin {

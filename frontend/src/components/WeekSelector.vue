@@ -7,7 +7,7 @@
         </svg>
       </button>
       
-      <button @click="$emit('today')" class="btn-secondary text-sm px-3 py-1.5">
+      <button @click="$emit('today')" class="btn-secondary text-sm px-3 py-1.5 min-h-[44px]">
         Heute
       </button>
       
@@ -30,8 +30,10 @@
           v-for="n in [2, 3]"
           :key="n"
           @click="$emit('update:weeksToShow', n)"
-          class="px-3 py-1.5 text-sm font-medium transition-colors"
-          :class="weeksToShow === n ? 'bg-primary-500 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'"
+          class="px-3 py-1.5 min-h-[44px] text-sm font-medium transition-colors touch-manipulation"
+          :class="weeksToShow === n 
+            ? 'bg-primary-500 text-white active:bg-primary-600' 
+            : 'bg-white text-gray-600 hover:bg-gray-50 active:bg-gray-100'"
         >
           {{ n }}
         </button>

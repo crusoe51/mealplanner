@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 sticky top-20">
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 xl:sticky xl:top-20">
     <!-- Header -->
     <div class="p-4 border-b border-gray-100">
       <div class="flex items-center justify-between mb-3">
@@ -29,12 +29,14 @@
         <div
           v-for="meal in filtered"
           :key="meal.id"
-          class="p-2.5 bg-white border border-gray-200 rounded-lg cursor-grab 
-                 hover:border-primary-300 hover:shadow-sm transition-all
-                 active:cursor-grabbing active:shadow-md"
+          class="p-3 min-h-[44px] bg-white border border-gray-200 rounded-lg cursor-grab 
+                 hover:border-primary-300 hover:shadow-sm transition-all touch-manipulation
+                 active:cursor-grabbing active:shadow-md active:bg-primary-50
+                 md:cursor-grab"
           :style="{ borderLeftColor: meal.color, borderLeftWidth: '4px' }"
           draggable="true"
           @dragstart="e => onDrag(e, meal)"
+          @click="onMealClick(meal)"
         >
           <span class="text-sm font-medium text-gray-800">{{ meal.name }}</span>
         </div>
@@ -47,7 +49,7 @@
     
     <!-- Add Button -->
     <div class="p-3 border-t border-gray-100">
-      <button @click="$emit('add')" class="w-full btn-primary text-sm py-2">
+      <button @click="$emit('add')" class="w-full btn-primary text-sm py-2 min-h-[44px]">
         + Neues Gericht
       </button>
     </div>
@@ -61,7 +63,7 @@ const props = defineProps({
   meals: Array
 })
 
-defineEmits(['add'])
+const emit = defineEmits(['add', 'select'])
 
 const search = ref('')
 
@@ -76,6 +78,12 @@ function onDrag(e, meal) {
     type: 'new',
     mealId: meal.id
   }))
+}
+
+function onMealClick(meal) {
+  // On mobile devices, emit a select event instead of relying on drag & drop
+  // The parent component can handle this to show a selection UI
+  emit('select', meal)
 }
 </script>
 
