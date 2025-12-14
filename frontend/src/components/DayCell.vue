@@ -1,20 +1,21 @@
 <template>
   <div 
-    class="day-cell rounded-lg border-2 overflow-hidden transition-all"
+    class="day-cell rounded-lg border-2 overflow-hidden transition-all flex-shrink-0
+           w-[100px] sm:w-auto"
     :class="isToday ? 'border-primary-500 shadow-md' : 'border-gray-200'"
   >
     <!-- Header -->
     <div 
-      class="text-center py-1.5"
+      class="text-center py-1 sm:py-1.5"
       :class="isToday ? 'bg-primary-500 text-white' : isWeekend ? 'bg-gray-100 text-gray-400' : 'bg-gray-50 text-gray-600'"
     >
       <div class="text-xs font-medium">{{ dayName }}</div>
-      <div class="text-lg font-bold leading-none">{{ dayNumber }}</div>
+      <div class="text-base sm:text-lg font-bold leading-none">{{ dayNumber }}</div>
     </div>
     
     <!-- Drop Zone -->
     <div 
-      class="p-2 min-h-[70px] transition-colors"
+      class="p-1.5 sm:p-2 min-h-[60px] sm:min-h-[70px] transition-colors"
       :class="isDragOver ? 'bg-primary-50' : meal ? 'bg-white' : 'bg-gray-50'"
       @dragover.prevent="isDragOver = true"
       @dragleave="isDragOver = false"
@@ -23,19 +24,21 @@
       <!-- Meal -->
       <div 
         v-if="meal"
-        class="group relative p-2 rounded-lg border-l-4 bg-white shadow-sm cursor-grab active:cursor-grabbing"
+        class="group relative p-1.5 sm:p-2 rounded-lg border-l-4 bg-white shadow-sm cursor-grab active:cursor-grabbing"
         :style="{ borderColor: meal.color }"
         draggable="true"
         @dragstart="onDragStart"
       >
-        <span class="text-sm font-medium text-gray-800 line-clamp-2">{{ meal.name }}</span>
+        <span class="text-xs sm:text-sm font-medium text-gray-800 line-clamp-2 leading-tight">{{ meal.name }}</span>
         
         <button
-          @click="$emit('clear')"
-          class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full 
-                 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+          @click.stop="$emit('clear')"
+          class="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 w-6 h-6 sm:w-5 sm:h-5 bg-red-500 text-white rounded-full 
+                 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex items-center justify-center
+                 touch-manipulation min-w-[24px] min-h-[24px]"
+          aria-label="Gericht entfernen"
         >
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -49,7 +52,7 @@
                  active:bg-primary-50 transition-colors touch-manipulation"
           aria-label="Gericht hinzufügen"
         >
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
           </svg>
         </button>
