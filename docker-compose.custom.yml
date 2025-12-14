@@ -1,5 +1,9 @@
 version: '3.8'
 
+# Beispiel-Konfiguration mit benutzerdefinierten Ports
+# Kopiere diese Datei und passe die Ports an deine Bedürfnisse an
+# Verwendung: docker compose -f docker-compose.custom.yml up -d
+
 services:
   backend:
     build:
@@ -8,7 +12,7 @@ services:
     container_name: mealplanner-backend
     restart: unless-stopped
     ports:
-      - "5000:5000"
+      - "5001:5000"  # Backend auf Port 5001 (statt 5000)
     volumes:
       - ./backend/data:/app/data
     environment:
@@ -21,12 +25,12 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        # API URL zur Build-Zeit setzen - IP-Adresse des Raspberry Pi anpassen!
-        - VITE_API_URL=http://192.168.1.100:5000/api
+        # WICHTIG: API URL anpassen, wenn Backend-Port geändert wurde!
+        - VITE_API_URL=http://localhost:5001/api
     container_name: mealplanner-frontend
     restart: unless-stopped
     ports:
-      - "8086:80"  # Host-Port:Container-Port (8080 auf Raspberry Pi, 80 im Container)
+      - "8086:80"  # Frontend auf Port 8080 (statt 80)
     depends_on:
       - backend
     networks:

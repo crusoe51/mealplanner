@@ -12,6 +12,8 @@ services:
     volumes:
       # Datenbank persistieren
       - ./backend/data:/app/data
+    # Stelle sicher, dass das Verzeichnis existiert
+    # Falls nicht, wird es automatisch erstellt
     environment:
       - FLASK_ENV=production
     networks:
@@ -27,15 +29,16 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://192.168.178.65:5000/api
     container_name: mealplanner-frontend
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8086:80"  # Host-Port:Container-Port (8080 auf Raspberry Pi, 80 im Container)
     depends_on:
       - backend
-    environment:
-      # Backend-URL für Frontend (wird zur Build-Zeit verwendet)
-      - VITE_API_URL=http://localhost:5000/api
+    # Backend-URL wird zur Laufzeit automatisch aus der Browser-URL abgeleitet
+    # Keine environment-Variablen nötig, da die App die URL dynamisch bestimmt
     networks:
       - mealplanner-network
     healthcheck:
@@ -48,4 +51,5 @@ services:
 networks:
   mealplanner-network:
     driver: bridge
+
 

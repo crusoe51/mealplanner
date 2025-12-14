@@ -1,6 +1,39 @@
 import axios from 'axios'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// API URL: Immer relative URL verwenden (Nginx-Proxy)
+// Nginx leitet /api automatisch an backend:5000 weiter
+const getApiUrl = () => {
+  // Wenn VITE_API_URL explizit gesetzt ist (zur Build-Zeit), verwende diese
+  // Aber nur wenn es NICHT der Standard localhost ist
+  if (import.meta.env.VITE_API_URL && 
+      import.meta.env.VITE_API_URL !== 'http://localhost:5000/api' &&
+      !import.meta.env.VITE_API_URL.startsWith('/')) {
+    console.log('📦 Using build-time API URL:', import.meta.env.VITE_API_URL)
+    return import.meta.env.VITE_API_URL
+  }
+  
+  const hostname = window.location.hostname
+  const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1'
+  
+  // Für lokale Entwicklung (nicht Docker): direkte Verbindung
+  if (isLocalhost && window.location.port === '5173') {
+    // Vite Dev Server - direkte Verbindung
+    const apiUrl = 'http://localhost:5000/api'
+    console.log('🏠 Using localhost API URL (Dev):', apiUrl)
+    return apiUrl
+  }
+  
+  // Für Docker/Production: Immer relative URL verwenden (Nginx-Proxy)
+  // Nginx leitet /api an backend:5000 weiter
+  const apiUrl = '/api'
+  console.log('🔄 Using Nginx proxy API URL:', apiUrl, '(hostname:', hostname, ')')
+  return apiUrl
+}
+
+const API_URL = getApiUrl()
+
+// Debug: API URL in Console ausgeben (immer, für Troubleshooting)
+console.log('🔗 API URL:', API_URL)
 
 const api = axios.create({
   baseURL: API_URL,

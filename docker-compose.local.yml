@@ -1,5 +1,8 @@
 version: '3.8'
 
+# Lokale Konfiguration für Raspberry Pi
+# Verwendung: docker compose -f docker-compose.local.yml up -d
+
 services:
   backend:
     build:
@@ -21,12 +24,12 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        # API URL zur Build-Zeit setzen - IP-Adresse des Raspberry Pi anpassen!
-        - VITE_API_URL=http://192.168.1.100:5000/api
+        # API URL für lokalen Raspberry Pi (IP-Adresse anpassen falls nötig)
+        - VITE_API_URL=http://192.168.178.65:5000/api
     container_name: mealplanner-frontend
     restart: unless-stopped
     ports:
-      - "8086:80"  # Host-Port:Container-Port (8080 auf Raspberry Pi, 80 im Container)
+      - "8086:80"
     depends_on:
       - backend
     networks:

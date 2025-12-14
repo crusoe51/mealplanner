@@ -16,7 +16,7 @@ docker compose build
 docker compose up -d
 
 # 4. App öffnen
-# Frontend: http://raspberry-pi-ip
+# Frontend: http://raspberry-pi-ip:8080
 # Backend: http://raspberry-pi-ip:5000/api
 ```
 
@@ -58,4 +58,5 @@ cp backend/data/meals.db backend/data/meals.db.backup
 # Restore
 cp backend/data/meals.db.backup backend/data/meals.db
 ```
+
 

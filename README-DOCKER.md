@@ -55,7 +55,7 @@ docker compose logs -f
 
 ### 4. App aufrufen
 
-- **Frontend**: `http://raspberry-pi-ip` oder `http://localhost`
+- **Frontend**: `http://raspberry-pi-ip:8080` oder `http://localhost:8080`
 - **Backend API**: `http://raspberry-pi-ip:5000/api`
 
 ## Konfiguration
