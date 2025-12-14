@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mealplanner-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      # Datenbank persistieren
+      - ./backend/data:/app/data
+    environment:
+      - FLASK_ENV=production
+    networks:
+      - mealplanner-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mealplanner-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      # Backend-URL für Frontend (wird zur Build-Zeit verwendet)
+      - VITE_API_URL=http://localhost:5000/api
+    networks:
+      - mealplanner-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+networks:
+  mealplanner-network:
+    driver: bridge
+
