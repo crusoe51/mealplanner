@@ -29,11 +29,8 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=10s \
   CMD curl -f http://localhost:${PORT}/health || exit 1
 
 # Production Gunicorn (Free Tier: 1 Worker, 8 Threads)
-CMD exec gunicorn --bind 0.0.0.0:${PORT} \
-    --workers 1 \
-    --threads 8 \
-    --worker-class gthread \
-    --timeout 120 \
-    --max-requests 1000 \
-    --max-requests-jitter 100 \
-    "app:app"
+CMD ["gunicorn", "--bind", "0.0.0.0:${PORT}", \
+     "--workers", "1", "--threads", "8", \
+     "--worker-class", "gthread", \
+     "--timeout", "120", \
+     "app:app"]
