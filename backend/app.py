@@ -128,6 +128,14 @@ def current_week():
     year, week, _ = now.isocalendar()
     return jsonify({"year": year, "week": week})
 
+# Frontend Routes (NACH /api/ Routes!)
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    if path and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder, 'index.html')
+
 
 if __name__ == '__main__':
     import os
