@@ -1,7 +1,9 @@
 import sqlite3
 from pathlib import Path
 
-DATABASE_PATH = Path(__file__).parent / "data" / "meals.db"
+# DOCKER-SICHER: Render ephemeral /tmp/ oder Volume
+DB_DIR = Path('/tmp/data') if os.getenv('RENDER') else Path(__file__).parent / "data"
+DATABASE_PATH = DB_DIR / "meals.db"
 
 
 def get_db_connection():
