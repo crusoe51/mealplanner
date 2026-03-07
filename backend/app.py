@@ -128,7 +128,7 @@ def current_week():
     year, week, _ = now.isocalendar()
     return jsonify({"year": year, "week": week})
 
-# Frontend Routes (NACH /api/ Routes!)
+# Frontend (GANZ UNTEN, nach allen API-Routes!)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_frontend(path):
