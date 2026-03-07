@@ -1,4 +1,5 @@
 import sqlite3
+import os
 from pathlib import Path
 
 # DOCKER-SICHER: Render ephemeral /tmp/ oder Volume
