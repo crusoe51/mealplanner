@@ -8,10 +8,15 @@ CORS(app)
 
 database.init_db()
 
+# TEST ROUTE (lösche später)
+@app.route('/')
+def home():
+    return "<h1>Meal Planner Live! 🚀</h1><p>Gunicorn OK, Flask OK</p>"
 
 @app.route('/api/health')
 def health():
     return jsonify({"status": "ok"})
+
 
 
 # ==================== MEALS ====================
