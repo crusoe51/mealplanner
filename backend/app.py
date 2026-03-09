@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 import database
 
-app = Flask(__name__, static_folder='../frontend/dist')
+app = Flask(__name__, static_folder='static')
 CORS(app)
 
 database.init_db()
