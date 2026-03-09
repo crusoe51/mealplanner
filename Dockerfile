@@ -5,7 +5,6 @@ COPY frontend/package*.json ./
 RUN npm install
 COPY frontend/ .
 RUN npm run build
-# Output: /frontend/dist
 
 # Stage 2: Flask Backend + Frontend
 FROM python:3.12-slim
@@ -19,11 +18,11 @@ RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 COPY backend/ .
-
-# Vite dist → Flask static Ordner
 COPY --from=frontend-builder /frontend/dist ./static
 
 ENV PORT=10000
+ENV TURSO_DATABASE_URL=""
+ENV TURSO_AUTH_TOKEN=""
 EXPOSE 10000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
